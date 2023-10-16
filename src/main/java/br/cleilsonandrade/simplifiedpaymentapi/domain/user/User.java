@@ -2,6 +2,7 @@ package br.cleilsonandrade.simplifiedpaymentapi.domain.user;
 
 import java.math.BigDecimal;
 
+import br.cleilsonandrade.simplifiedpaymentapi.dtos.UserDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -13,12 +14,14 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity(name = "users")
 @Table(name = "tb_user")
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
+@NoArgsConstructor
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,4 +42,14 @@ public class User {
 
   @Enumerated(EnumType.STRING)
   private UserType userType;
+
+  public User(UserDTO data) {
+    this.firstName = data.firstName();
+    this.lastName = data.lastName();
+    this.balance = data.balance();
+    this.userType = data.userType();
+    this.password = data.password();
+    this.email = data.email();
+    this.document = data.document();
+  }
 }
